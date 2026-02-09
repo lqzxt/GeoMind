@@ -1,72 +1,82 @@
-# GeoMind
+# GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation
 
-A reinforcement learning-based agent for automated lithology classification from well log data, powered by the [agentlightning](https://github.com/microsoft/agent-lightning) framework.
+> **Note:** This repository contains the official implementation of the paper *"GeoMind: A Agentic Workflow for Lithology Classification with Reasoned Tool Invocation"*.
 
-## Overview
+## 📖 Introduction
 
-This project implements an intelligent agent that combines multiple prediction methods (Neural Networks, Large Language Models) to classify lithology from well log data. The agent uses reinforcement learning to optimize its decision-making process across multiple geological datasets.
+**GeoMind** is a novel agentic framework that treats lithology classification not as a static pattern-matching task, but as a **sequential multi-step reasoning process**.
 
-### Key Features
-
-- **Reinforcement Learning Training**: Uses VERL (Variational Experience Replay Learning) for continuous improvement
-- **Multi-Dataset Support**: Works with 4 different geological datasets (Facies, FORCE-2020, Geolink, SEAM)
-- **Geological Reasoning**: Incorporates trend analysis, transition probability checks, and disagreement analysis
-- **Comprehensive Logging**: Tracks all LLM calls with detailed prompt/response logging
-
-### Supported Datasets
-
-1. **Facies Dataset**: lithofacies classification
-2. **FORCE-2020 Dataset**: lithology classification
-3. **Geolink Dataset**: lithology classification
-4. **SEAM Dataset**: geological layer classification
+Traditional methods (Classical ML or standard LLMs) often struggle with noisy well-log data ("salt-and-pepper" noise) or fail to adhere to stratigraphic consistency. GeoMind bridges this gap by coordinating specialized tools through a **Planner-Executor-Reflector** architecture, optimized via a novel **Module-Aware Group Relative Policy Optimization (MA-GRPO)** algorithm.
 
 
-## Environment Setup
+## 🚀 Key Features
+
+* **🤖 Agentic Workflow**:
+    * **Planner**: Dynamically decomposes tasks and orchestrates tool invocation based on log characteristics.
+    * **Executor**: Utilizing a hierarchical toolkit including *Trend Pattern Extractor*, *Neighbor Vote Aggregator*, and *Neural Probability Interpreter*.
+    * **Reflector**: Performs self-correction and resolves conflicting signals using geological constraints (Stratigraphic Sequence Validator).
+
+* **🧠 MA-GRPO Training**:
+    * Implements **Module-Aware Group Relative Policy Optimization** to solve the credit assignment problem in multi-step reasoning.
+    * Optimizes intermediate reasoning steps (trend analysis, reasoning traces) alongside final prediction accuracy.
+
+## 🛠️ Environment Setup
 
 ### Prerequisites
 
-- Python 3.8+
-- CUDA-capable GPU (for training)
-- 32GB+ RAM recommended
+* Linux OS
+* Python 3.8+
+* CUDA-capable GPU (Recommended: A800/H800 for training)
 
 ### Installation
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd <repository-name>
+1.  **Clone the repository**
+
+2.  **Create a virtual environment**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## 📂 Data Preparation
+
+We support four standard benchmark datasets. Please ensure your data is preprocessed (windowing, normalization, and outlier removal) as described in the paper.
+
+* **Facies**: Council Grove gas reservoir logs.
+* **FORCE**: 2020 Lithology prediction challenge data.
+* **GeoLink**: Large-scale North Sea dataset.
+* **SEAM**: SEG Wiki open data.
+
+Structure your data directory as follows:
+
 ```
 
-2. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate
+data/
+├── facies/
+├── force/
+├── geolink/
+└── seam/
+
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+## 🚅 Training
 
-## Usage
-
-### Training
-
-Train the agent using reinforcement learning:
+To train the GeoMind agent using the **MA-GRPO** strategy with process rewards:
 
 ```bash
 python train_well_log.py train \
+    --exp_name geomind_kdd_experiment \
     --model qwen3-4b \
+    --model_name gpt4ts \
+    --datasets facies \
     --epochs 10 \
     --runners 64 \
-    --exp_name my_experiment \
-    --datasets facies \
-    --model_name gpt4ts \
     --gpus 8 \
     --nodes 1 \
-    --accelerator npu
+
 ```
-
-## Acknowledgments
-
-- Built with [agentlightning](https://github.com/microsoft/agent-lightning) framework
