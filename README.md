@@ -1,6 +1,6 @@
 # GeoMind
 
-A reinforcement learning-based agent for automated lithology classification from well log data, powered by the [agentlightning](https://github.com/microsoft/agentlightning) framework.
+A reinforcement learning-based agent for automated lithology classification from well log data, powered by the [agentlightning](https://github.com/microsoft/agent-lightning) framework.
 
 ## Overview
 
@@ -69,4 +69,4 @@ python train_well_log.py train \
 
 ## Acknowledgments
 
-- Built with [agentlightning](https://github.com/microsoft/agentlightning) framework
+- Built with [agentlightning](https://github.com/microsoft/agent-lightning) framework
