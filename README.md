@@ -1,6 +1,9 @@
+
 # GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation
 
-> **Note:** This repository contains the official implementation of the paper *"GeoMind: A Agentic Workflow for Lithology Classification with Reasoned Tool Invocation"*.
+[![KDD 2027](https://img.shields.io/badge/KDD-2027%20Accepted-blue)]()
+
+> 🎉 **News:** Our paper, *"GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation"*, has been accepted to **ACM SIGKDD 2027 (KDD '27)**!
 
 ## 📖 Introduction
 
